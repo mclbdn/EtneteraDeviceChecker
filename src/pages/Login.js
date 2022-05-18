@@ -1,8 +1,10 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Nav from "../components/Nav";
 import styles from "./Login.module.scss";
 
 const Login = () => {
+  const navigate = useNavigate();
   const [prihlasovaciJmeno, setPrihlasovaciJmeno] = useState("");
   const [heslo, setHeslo] = useState("");
   const [formHasErrors, setFormHasErrors] = useState(false);
@@ -25,6 +27,8 @@ const Login = () => {
 
     if (response.status === 200) {
       console.log("OK");
+      localStorage.setItem("token", data.token);
+      navigate("/devicelist");
     } else if (response.status === 401) {
       console.log(401);
       setFormHasErrors({
@@ -44,21 +48,23 @@ const Login = () => {
       <main>
         <h1 className={styles.h1}>Přihlášení</h1>
         <form onSubmit={login}>
-          <div className={styles.label_and_input_container}>
-            <label htmlFor="prihlasovaciJmeno">Přihlašovací jméno</label>
-            <input
-              type="text"
-              name="prihlasovaciJmeno"
-              id="prihlasovaciJmeno"
-              placeholder="Přihlašovací jméno"
-              value={prihlasovaciJmeno}
-              onChange={(e) => setPrihlasovaciJmeno(e.target.value)}
-              required
-            />
-          </div>
-          <div className={styles.label_and_input_container}>
-            <label htmlFor="heslo">Heslo</label>
-            <input type="password" name="heslo" id="heslo" placeholder="Heslo" value={heslo} onChange={(e) => setHeslo(e.target.value)} required />
+          <div className={styles.login_and_password}>
+            <div className={styles.label_and_input_container}>
+              <label htmlFor="prihlasovaciJmeno">Přihlašovací jméno</label>
+              <input
+                type="text"
+                name="prihlasovaciJmeno"
+                id="prihlasovaciJmeno"
+                placeholder="Přihlašovací jméno"
+                value={prihlasovaciJmeno}
+                onChange={(e) => setPrihlasovaciJmeno(e.target.value)}
+                required
+              />
+            </div>
+            <div className={styles.label_and_input_container}>
+              <label htmlFor="heslo">Heslo</label>
+              <input type="password" name="heslo" id="heslo" placeholder="Heslo" value={heslo} onChange={(e) => setHeslo(e.target.value)} required />
+            </div>
           </div>
           <button>Přihlásit se</button>
         </form>

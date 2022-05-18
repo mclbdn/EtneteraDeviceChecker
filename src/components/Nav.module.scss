@@ -11,10 +11,29 @@ nav {
     .etnetera_logo {
       width: 15px;
       margin-right: 5px;
+
+      @media screen and(min-width: 744px) {
+      }
     }
 
     .logo_text {
       font-size: 15px;
+
+      @media screen and(min-width: 744px) {
+        font-size: 18px;
+      }
+
+      @media screen and(min-width: 1440px) {
+        font-size: 20px;
+      }
+    }
+
+    @media screen and(min-width: 744px) {
+      margin: 20px 40px 20px 40px;
+    }
+
+    @media screen and(min-width: 1440px) {
+      margin: 20px 140px 20px 140px;
     }
   }
 }
