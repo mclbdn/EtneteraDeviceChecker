@@ -39,8 +39,11 @@ main {
       cursor: pointer;
       color: $off-white-color;
     }
-    .select {
-      border-color: $off-white-color;
+    .select,
+    .search_input {
+      height: 30px;
+      line-height: 30px;
+      border: 1px solid $off-white-color;
       background-color: transparent;
       color: $white-color;
       border-radius: 4px;

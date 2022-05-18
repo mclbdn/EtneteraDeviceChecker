@@ -8,6 +8,7 @@ import styles from "./DeviceList.module.scss";
 
 const DeviceList = () => {
   const navigate = useNavigate();
+  const [search, setSearch] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
   const [phones, setPhones] = useState([]);
   const [osList, setOsList] = useState([]);
@@ -80,6 +81,39 @@ const DeviceList = () => {
     setIsResetBtnVisble(true);
   };
 
+  const handleSearch = (e) => {
+    const lowerCasedSearch = e.target.value.toLowerCase();
+    setSearch(lowerCasedSearch);
+
+    // const filteredPhones = phones.filter((phone) => {
+    //   if (!search) {
+    //     return true;
+    //   }
+
+    //   if (phone.os.toLowerCase().startsWith(search)) {
+    //     return true;
+    //   }
+    // });
+
+    // setPhones(filteredPhones);
+  };
+
+  useEffect(() => {
+    const filteredPhones = phones.filter((phone) => {
+      if (!search) {
+        return true;
+      }
+
+      if (phone.os.toLowerCase().startsWith(search) || phone.vendor.toLowerCase().startsWith(search)) {
+        return true;
+      }
+
+      return false;
+    });
+
+    setPhones(filteredPhones);
+  }, [search]);
+
   useEffect(() => {
     if (phones) {
       phones.forEach((phone) => {
@@ -104,14 +138,31 @@ const DeviceList = () => {
           <div className={styles.select_container}>
             <select onChange={handleOsFilter} className={styles.select}>
               {osList.map((os) => {
-                return <option value={os}>{os}</option>;
+                return (
+                  <option key={os} value={os}>
+                    {os}
+                  </option>
+                );
               })}
             </select>
             <select id="vendor" onChange={handleVendorFilter} className={styles.select}>
               {vendorList.map((vendor) => {
-                return <option value={vendor}>{vendor}</option>;
+                return (
+                  <option key={vendor} value={vendor}>
+                    {vendor}
+                  </option>
+                );
               })}
             </select>
+            <input
+              type="text"
+              name="search"
+              id="search"
+              placeholder="Hledat"
+              value={search}
+              onChange={(e) => handleSearch(e)}
+              className={styles.search_input}
+            />
             {isResetBtnVisible && <FontAwesomeIcon className={styles.reset_btn} onClick={getPhones} icon={faArrowsRotate} />}
           </div>
           <div className={styles.add_and_logout_container}>
