@@ -1,9 +1,12 @@
 @import "../styles/variables";
 
 main {
-  .nav_btns_container {
-    width: fit-content;
-    margin-left: auto;
+  .select_and_btns_container {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 20px;
 
     .fa_nav_icon {
       height: 20px;
@@ -28,6 +31,20 @@ main {
 
     @media screen and (min-width: 1440px) {
       font-size: 20px;
+    }
+  }
+
+  .select_container {
+    .reset_btn {
+      cursor: pointer;
+      color: $off-white-color;
+    }
+    .select {
+      border-color: $off-white-color;
+      background-color: transparent;
+      color: $white-color;
+      border-radius: 4px;
+      margin-right: 20px;
     }
   }
 

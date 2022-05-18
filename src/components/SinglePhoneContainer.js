@@ -2,7 +2,7 @@ import React from "react";
 import no_image_placeholder from "../assets/no_image_placeholder.png";
 import styles from "./SinglePhoneContainer.module.scss";
 
-const SinglePhoneContainer = ({ model, vendor, os, osVersion, image }) => {
+const SinglePhoneContainer = ({ id, model, vendor, os, osVersion, image }) => {
   if (!image) {
     image = no_image_placeholder;
   }

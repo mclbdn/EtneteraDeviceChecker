@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Nav from "../components/Nav";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowRightFromBracket, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faArrowRightFromBracket, faArrowsRotate, faPlus } from "@fortawesome/free-solid-svg-icons";
 import SinglePhoneContainer from "../components/SinglePhoneContainer";
 import styles from "./DeviceList.module.scss";
 
@@ -10,6 +10,11 @@ const DeviceList = () => {
   const navigate = useNavigate();
   const [isAdmin, setIsAdmin] = useState(false);
   const [phones, setPhones] = useState([]);
+  const [osList, setOsList] = useState([]);
+  const [vendorList, setVendorList] = useState([]);
+  const [isResetBtnVisible, setIsResetBtnVisble] = useState(false);
+  const osSet = new Set();
+  const vendorSet = new Set();
 
   const logout = () => {
     localStorage.removeItem("token");
@@ -52,9 +57,39 @@ const DeviceList = () => {
     });
 
     const data = await response.json();
-    console.log(data);
+
     setPhones(data);
+    console.log(data);
   };
+
+  const handleOsFilter = (e) => {
+    let currentOs = e.target.value;
+
+    const updatePhonesState = phones.filter((phone) => phone.os === currentOs);
+
+    setPhones(updatePhonesState);
+    setIsResetBtnVisble(true);
+  };
+
+  const handleVendorFilter = (e) => {
+    let currentVendor = e.target.value;
+
+    const updatePhonesState = phones.filter((phone) => phone.vendor === currentVendor);
+
+    setPhones(updatePhonesState);
+    setIsResetBtnVisble(true);
+  };
+
+  useEffect(() => {
+    if (phones) {
+      phones.forEach((phone) => {
+        osSet.add(phone.os);
+        vendorSet.add(phone.vendor);
+      });
+    }
+    setOsList([...osSet]);
+    setVendorList([...vendorSet]);
+  }, [phones]);
 
   useEffect(() => {
     verifyUserOrAdmin();
@@ -65,11 +100,26 @@ const DeviceList = () => {
     <>
       <Nav />
       <main>
-        <div className={styles.nav_btns_container}>
-          {isAdmin && (
-            <FontAwesomeIcon icon={faPlus} onClick={redirectToCreateDevice} className={`${styles.fa_nav_icon} ${styles.plus_fa_nav_icon}`} />
-          )}
-          <FontAwesomeIcon icon={faArrowRightFromBracket} onClick={logout} className={styles.fa_nav_icon} />
+        <div className={styles.select_and_btns_container}>
+          <div className={styles.select_container}>
+            <select onChange={handleOsFilter} className={styles.select}>
+              {osList.map((os) => {
+                return <option value={os}>{os}</option>;
+              })}
+            </select>
+            <select id="vendor" onChange={handleVendorFilter} className={styles.select}>
+              {vendorList.map((vendor) => {
+                return <option value={vendor}>{vendor}</option>;
+              })}
+            </select>
+            {isResetBtnVisible && <FontAwesomeIcon className={styles.reset_btn} onClick={getPhones} icon={faArrowsRotate} />}
+          </div>
+          <div className={styles.add_and_logout_container}>
+            {isAdmin && (
+              <FontAwesomeIcon icon={faPlus} onClick={redirectToCreateDevice} className={`${styles.fa_nav_icon} ${styles.plus_fa_nav_icon}`} />
+            )}
+            <FontAwesomeIcon icon={faArrowRightFromBracket} onClick={logout} className={styles.fa_nav_icon} />
+          </div>
         </div>
         <h1 style={{ color: "white" }}>Device List</h1>
         <div className={styles.phones_container}>
@@ -77,6 +127,7 @@ const DeviceList = () => {
             return (
               <SinglePhoneContainer
                 key={phone.id}
+                id={phone.id}
                 model={phone.model}
                 vendor={phone.vendor}
                 os={phone.os}
