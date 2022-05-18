@@ -9,7 +9,6 @@ const Nav = () => {
         <img className={styles.etnetera_logo} src={etnetera_logo} />
         <p className={styles.logo_text}>Device Checker</p>
       </div>
-      
     </nav>
   );
 };

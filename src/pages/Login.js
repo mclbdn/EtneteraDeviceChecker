@@ -28,6 +28,7 @@ const Login = () => {
     if (response.status === 200) {
       console.log("OK");
       localStorage.setItem("token", data.token);
+      localStorage.setItem("userId", data.id);
       navigate("/devicelist");
     } else if (response.status === 401) {
       console.log(401);
