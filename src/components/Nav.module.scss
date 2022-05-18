@@ -1,0 +1,20 @@
+@import "../styles/variables";
+
+nav {
+  border-bottom: 1px solid $off-white-color;
+
+  .logo_container {
+    width: fit-content;
+    margin: 20px auto 20px;
+    display: flex;
+
+    .etnetera_logo {
+      width: 15px;
+      margin-right: 5px;
+    }
+
+    .logo_text {
+      font-size: 15px;
+    }
+  }
+}
