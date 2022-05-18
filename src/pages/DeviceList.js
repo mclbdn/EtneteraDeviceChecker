@@ -1,13 +1,21 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Nav from "../components/Nav";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowRightFromBracket, faPlus } from "@fortawesome/free-solid-svg-icons";
+import styles from "./DeviceList.module.scss";
 
 const DeviceList = () => {
   const navigate = useNavigate();
+  const [isAdmin, setIsAdmin] = useState(false);
 
   const logout = () => {
     localStorage.removeItem("token");
     navigate("/login");
+  };
+
+  const redirectToCreateDevice = () => {
+    navigate("/createdevice")
   };
 
   const verifyUserOrAdmin = async () => {
@@ -21,6 +29,11 @@ const DeviceList = () => {
     });
 
     const data = await response.json();
+    console.log(data);
+
+    if (data.type === "admin") {
+      setIsAdmin(true);
+    }
 
     if (response.status !== 200) {
       navigate("/login");
@@ -28,11 +41,6 @@ const DeviceList = () => {
   };
 
   useEffect(() => {
-    // const token = localStorage.getItem("token");
-
-    // if (!token) {
-    //   navigate("/login");
-    // }
     verifyUserOrAdmin();
   }, []);
 
@@ -40,9 +48,10 @@ const DeviceList = () => {
     <>
       <Nav />
       <main>
-        <ul>
-          <button onClick={logout}>Odhlásit</button>
-        </ul>
+        <div className={styles.nav_btns_container}>
+          {isAdmin && <FontAwesomeIcon icon={faPlus} onClick={redirectToCreateDevice} className={`${styles.fa_nav_icon} ${styles.plus_fa_nav_icon}`} />}
+          <FontAwesomeIcon icon={faArrowRightFromBracket} onClick={logout} className={styles.fa_nav_icon} />
+        </div>
         <h1 style={{ color: "white" }}>Device List</h1>
       </main>
     </>
