@@ -74,7 +74,16 @@ const DeviceList = () => {
         <h1 style={{ color: "white" }}>Device List</h1>
         <div className={styles.phones_container}>
           {phones.map((phone) => {
-            return <SinglePhoneContainer />;
+            return (
+              <SinglePhoneContainer
+                key={phone.id}
+                model={phone.model}
+                vendor={phone.vendor}
+                os={phone.os}
+                osVersion={phone.osVersion}
+                image={phone.image}
+              />
+            );
           })}
         </div>
       </main>
