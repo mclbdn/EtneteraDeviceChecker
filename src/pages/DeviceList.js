@@ -194,8 +194,10 @@ const DeviceList = () => {
               onChange={(e) => handleSearch(e)}
               className={styles.search_input}
             />
-            <input type="checkbox" name="available" id="available" onChange={(e) => handleAvailable(e)} className={styles.search_checkbox} />
-            <label htmlFor="available">Jen dostupné</label>
+            <div className={styles.available_div}>
+              <input type="checkbox" name="available" id="available" onChange={(e) => handleAvailable(e)} className={styles.search_checkbox} />
+              <label htmlFor="available">Jen dostupné</label>
+            </div>
             {isResetBtnVisible && <FontAwesomeIcon className={styles.reset_btn} onClick={getPhones} icon={faArrowsRotate} />}
           </div>
           <div className={styles.add_and_logout_container}>

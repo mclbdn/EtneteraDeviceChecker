@@ -3,17 +3,11 @@ import no_image_placeholder from "../assets/no_image_placeholder.png";
 import styles from "./SinglePhoneContainer.module.scss";
 
 const SinglePhoneContainer = ({ id, model, vendor, os, osVersion, image, borrowed }) => {
+  const [borrowersId, setBorrowersId] = useState(borrowed ? borrowed.user.id : null);
   const [isPhoneBorrowed, setIsPhoneBorrowed] = useState(borrowed ? true : false);
-  // const userIdThatBorrowed = borrowed ? borrowed.user.id : null;
-  const [userIdThatBorrowed] = useState(borrowed ? borrowed.user.id : null);
-  const [canThisUserReturn, setCanThisUserReturn] = useState(userIdThatBorrowed === localStorage.getItem("userId"));
+  const [borrowerDetails, setBorrowerDetails] = useState({});
+  const [canThisUserReturn, setCanThisUserReturn] = useState(borrowersId === localStorage.getItem("userId"));
   const [btnText, setBtnText] = useState(canThisUserReturn ? "Vrátit" : "Půjčit");
-
-  console.log(`This user can vrátit phone: ${canThisUserReturn}`);
-
-  if (!image) {
-    image = no_image_placeholder;
-  }
 
   const returnPhone = async () => {
     const response = await fetch(`https://js-test-api.etnetera.cz/api/v1/phones/${id}/return`, {
@@ -29,7 +23,7 @@ const SinglePhoneContainer = ({ id, model, vendor, os, osVersion, image, borrowe
     setBtnText("Půjčit");
     setCanThisUserReturn(true);
     setIsPhoneBorrowed(false);
-    setCanThisUserReturn(true)
+    setCanThisUserReturn(true);
   };
 
   const borrowPhone = async () => {
@@ -42,10 +36,35 @@ const SinglePhoneContainer = ({ id, model, vendor, os, osVersion, image, borrowe
     });
 
     const data = await response.json();
-    console.log(data);
-    setBtnText("Vrátit");
+
+    setBorrowerDetails({ userdId: data.borrowed.user.id, userName: data.borrowed.user.name, date: new Date(data.borrowed.date).toLocaleString() });
     setIsPhoneBorrowed(true);
+    setCanThisUserReturn(true);
   };
+
+  const getBorrowersData = async () => {
+    const response = await fetch(`https://js-test-api.etnetera.cz/api/v1/phones/${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Auth-Token": localStorage.getItem("token"),
+      },
+    });
+
+    const data = await response.json();
+
+    setBorrowerDetails({ userdId: data.borrowed.user.id, userName: data.borrowed.user.name, date: new Date(data.borrowed.date).toLocaleString() });
+  };
+
+  useEffect(() => {
+    if (borrowed) {
+      getBorrowersData();
+    }
+  }, []);
+
+  if (!image) {
+    image = no_image_placeholder;
+  }
 
   let btn;
 
@@ -71,6 +90,11 @@ const SinglePhoneContainer = ({ id, model, vendor, os, osVersion, image, borrowe
 
   return (
     <div className={styles.single_phone_container}>
+      {isPhoneBorrowed && (
+        <div className={styles.borrowed_details}>
+          <p>{`Vypůjčeno: ${borrowerDetails.userName}, ${borrowerDetails.date}`}</p>
+        </div>
+      )}
       <img className={styles.image} src={image} alt={model} />
       <p className={styles.model}>{model}</p>
       <p className={styles.vendor}>{vendor}</p>

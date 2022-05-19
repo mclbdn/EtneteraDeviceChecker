@@ -4,7 +4,7 @@ main {
   .select_and_btns_container {
     display: flex;
     justify-content: space-between;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
     margin-bottom: 20px;
 
@@ -15,6 +15,10 @@ main {
 
     .plus_fa_nav_icon {
       margin-right: 20px;
+    }
+
+    @media screen and(min-width: 744px) {
+      flex-direction: row;
     }
   }
 
@@ -37,10 +41,17 @@ main {
   .select_container {
     display: flex;
     align-items: center;
+    flex-direction: column;
 
     .reset_btn {
       cursor: pointer;
       color: $off-white-color;
+      margin-bottom: 10px;
+
+      @media screen and (min-width: 744px) {
+        margin-bottom: 0;
+        margin-left: 10px;
+      }
     }
 
     .select,
@@ -52,12 +63,22 @@ main {
       color: $white-color;
       border-radius: 4px;
       margin-right: 20px;
+      margin-bottom: 10px;
+
+      @media screen and (min-width: 744px) {
+        margin-bottom: 0;
+      }
     }
 
-    .search_checkbox {
-      width: 20px;
-      height: 20px;
-      margin-right: 5px;
+    .available_div {
+      display: flex;
+      align-items: center;
+
+      .search_checkbox {
+        width: 20px;
+        height: 20px;
+        margin-right: 5px;
+      }
     }
 
     .label_for_screenreader {
@@ -69,6 +90,10 @@ main {
       position: absolute !important;
       white-space: nowrap !important;
       width: 1px !important;
+    }
+
+    @media screen and(min-width: 744px) {
+      flex-direction: row;
     }
   }
 

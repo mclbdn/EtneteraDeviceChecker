@@ -1,12 +1,31 @@
 @import "../styles/variables";
 
 .single_phone_container {
-  height: 300px;
+  height: 350px;
   position: relative;
   border-radius: 4px;
   border: 1px solid $orange-color;
   background-color: $white-color;
   margin-bottom: 20px;
+
+  .borrowed_details {
+  
+    background-color: $gray-color;
+
+    p {
+      margin-left: 20px;
+      color: $black-color;
+      font-size: 10px;
+
+      @media screen and (min-width: 744px) {
+        font-size: 12px;
+      }
+
+      @media screen and(min-width: 1440px) {
+        font-size: 15px;
+      }
+    }
+  }
 
   .image {
     width: auto;
@@ -44,7 +63,7 @@
   }
 
   .osAndOsVersion {
-    margin-top: 20px;
+    margin-top: 10px;
     margin-left: 20px;
     color: $black-color;
     font-size: 10px;
