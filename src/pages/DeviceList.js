@@ -70,7 +70,7 @@ const DeviceList = () => {
 
     const updatePhonesState = phones.filter((phone) => phone.os === currentOs);
 
-    setPhones(updatePhonesState);
+    setFilteredPhones(updatePhonesState);
     setIsResetBtnVisble(true);
   };
 
@@ -79,7 +79,7 @@ const DeviceList = () => {
 
     const updatePhonesState = phones.filter((phone) => phone.vendor === currentVendor);
 
-    setPhones(updatePhonesState);
+    setFilteredPhones(updatePhonesState);
     setIsResetBtnVisble(true);
   };
 
@@ -139,6 +139,9 @@ const DeviceList = () => {
         <div className={styles.select_and_btns_container}>
           <div className={styles.select_container}>
             <select onChange={handleOsFilter} className={styles.select}>
+              <option selected disabled>
+                OS
+              </option>
               {osList.map((os) => {
                 return (
                   <option key={os} value={os}>
@@ -148,6 +151,9 @@ const DeviceList = () => {
               })}
             </select>
             <select id="vendor" onChange={handleVendorFilter} className={styles.select}>
+              <option selected disabled>
+                Výrobce
+              </option>
               {vendorList.map((vendor) => {
                 return (
                   <option key={vendor} value={vendor}>
