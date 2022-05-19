@@ -35,6 +35,9 @@ main {
   }
 
   .select_container {
+    display: flex;
+    align-items: center;
+
     .reset_btn {
       cursor: pointer;
       color: $off-white-color;
@@ -51,7 +54,13 @@ main {
       margin-right: 20px;
     }
 
-    label {
+    .search_checkbox {
+      width: 20px;
+      height: 20px;
+      margin-right: 5px;
+    }
+
+    .label_for_screenreader {
       border-width: 0 !important;
       clip: rect(1px, 1px, 1px, 1px) !important;
       height: 1px !important;

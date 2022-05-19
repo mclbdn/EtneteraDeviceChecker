@@ -14,6 +14,7 @@ const DeviceList = () => {
   const [filteredPhones, setFilteredPhones] = useState([]);
   const [osList, setOsList] = useState([]);
   const [vendorList, setVendorList] = useState([]);
+  const [isAvailableCheckboxChecked, setIsAvailableCheckboxChecked] = useState(false);
   const [isResetBtnVisible, setIsResetBtnVisble] = useState(false);
   const osSet = new Set();
   const vendorSet = new Set();
@@ -87,6 +88,25 @@ const DeviceList = () => {
     const lowerCasedSearch = e.target.value.toLowerCase();
     setSearch(lowerCasedSearch);
   };
+
+  const handleAvailable = (e) => {
+    setIsAvailableCheckboxChecked(e.target.checked);
+  };
+
+  useEffect(() => {
+    const filteredPhones = phones.filter((phone) => {
+      if (!("borrowed" in phone) && isAvailableCheckboxChecked) {
+        return true;
+      }
+      return false;
+    });
+
+    if (isAvailableCheckboxChecked) {
+      setFilteredPhones(filteredPhones);
+    } else {
+      setFilteredPhones(phones);
+    }
+  }, [isAvailableCheckboxChecked]);
 
   useEffect(() => {
     const filteredPhones = phones.filter((phone) => {
@@ -162,7 +182,9 @@ const DeviceList = () => {
                 );
               })}
             </select>
-            <label htmlFor="search">Hledat</label>
+            <label className={styles.label_for_screenreader} htmlFor="search">
+              Hledat
+            </label>
             <input
               type="text"
               name="search"
@@ -172,6 +194,8 @@ const DeviceList = () => {
               onChange={(e) => handleSearch(e)}
               className={styles.search_input}
             />
+            <input type="checkbox" name="available" id="available" onChange={(e) => handleAvailable(e)} className={styles.search_checkbox} />
+            <label htmlFor="available">Jen dostupné</label>
             {isResetBtnVisible && <FontAwesomeIcon className={styles.reset_btn} onClick={getPhones} icon={faArrowsRotate} />}
           </div>
           <div className={styles.add_and_logout_container}>
@@ -193,6 +217,7 @@ const DeviceList = () => {
                 os={phone.os}
                 osVersion={phone.osVersion}
                 image={phone.image}
+                borrowed={phone.borrowed}
               />
             );
           })}
