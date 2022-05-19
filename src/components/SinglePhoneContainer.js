@@ -7,10 +7,9 @@ const SinglePhoneContainer = ({ id, model, vendor, os, osVersion, image, borrowe
   const [isPhoneBorrowed, setIsPhoneBorrowed] = useState(borrowed ? true : false);
   const [borrowerDetails, setBorrowerDetails] = useState({});
   const [canThisUserReturn, setCanThisUserReturn] = useState(borrowersId === localStorage.getItem("userId"));
-  const [btnText, setBtnText] = useState(canThisUserReturn ? "Vrátit" : "Půjčit");
 
   const returnPhone = async () => {
-    const response = await fetch(`https://js-test-api.etnetera.cz/api/v1/phones/${id}/return`, {
+    await fetch(`https://js-test-api.etnetera.cz/api/v1/phones/${id}/return`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -18,12 +17,10 @@ const SinglePhoneContainer = ({ id, model, vendor, os, osVersion, image, borrowe
       },
     });
 
-    const data = await response.json();
-    console.log(data);
-    setBtnText("Půjčit");
-    setCanThisUserReturn(true);
+    setCanThisUserReturn(false);
     setIsPhoneBorrowed(false);
-    setCanThisUserReturn(true);
+    setBorrowersId(null);
+    setBorrowerDetails({});
   };
 
   const borrowPhone = async () => {
@@ -36,8 +33,11 @@ const SinglePhoneContainer = ({ id, model, vendor, os, osVersion, image, borrowe
     });
 
     const data = await response.json();
+    console.log(data.borrowed);
 
     setBorrowerDetails({ userdId: data.borrowed.user.id, userName: data.borrowed.user.name, date: new Date(data.borrowed.date).toLocaleString() });
+
+    setBorrowersId(data.borrowed.user.id);
     setIsPhoneBorrowed(true);
     setCanThisUserReturn(true);
   };
