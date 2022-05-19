@@ -11,6 +11,7 @@ const DeviceList = () => {
   const [search, setSearch] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
   const [phones, setPhones] = useState([]);
+  const [filteredPhones, setFilteredPhones] = useState([]);
   const [osList, setOsList] = useState([]);
   const [vendorList, setVendorList] = useState([]);
   const [isResetBtnVisible, setIsResetBtnVisble] = useState(false);
@@ -60,6 +61,7 @@ const DeviceList = () => {
     const data = await response.json();
 
     setPhones(data);
+    setFilteredPhones(data);
     console.log(data);
   };
 
@@ -84,18 +86,6 @@ const DeviceList = () => {
   const handleSearch = (e) => {
     const lowerCasedSearch = e.target.value.toLowerCase();
     setSearch(lowerCasedSearch);
-
-    // const filteredPhones = phones.filter((phone) => {
-    //   if (!search) {
-    //     return true;
-    //   }
-
-    //   if (phone.os.toLowerCase().startsWith(search)) {
-    //     return true;
-    //   }
-    // });
-
-    // setPhones(filteredPhones);
   };
 
   useEffect(() => {
@@ -104,14 +94,26 @@ const DeviceList = () => {
         return true;
       }
 
-      if (phone.os.toLowerCase().startsWith(search) || phone.vendor.toLowerCase().startsWith(search)) {
+      if (phone.os && phone.os.toLowerCase().startsWith(search)) {
+        return true;
+      }
+
+      if (phone.osVersion && String(phone.osVersion).toLowerCase().startsWith(search)) {
+        return true;
+      }
+
+      if (phone.vendor && phone.vendor.toLowerCase().startsWith(search)) {
+        return true;
+      }
+
+      if (phone.model && phone.model.toLowerCase().startsWith(search)) {
         return true;
       }
 
       return false;
     });
 
-    setPhones(filteredPhones);
+    setFilteredPhones(filteredPhones);
   }, [search]);
 
   useEffect(() => {
@@ -174,7 +176,7 @@ const DeviceList = () => {
         </div>
         <h1 style={{ color: "white" }}>Device List</h1>
         <div className={styles.phones_container}>
-          {phones.map((phone) => {
+          {filteredPhones.map((phone) => {
             return (
               <SinglePhoneContainer
                 key={phone.id}
