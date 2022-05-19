@@ -70,19 +70,19 @@ const SinglePhoneContainer = ({ id, model, vendor, os, osVersion, image, borrowe
 
   if (isPhoneBorrowed && canThisUserReturn) {
     btn = (
-      <button style={{ backgroundColor: "yellow" }} onClick={returnPhone} className={styles.pujcit_btn}>
+      <button onClick={returnPhone} className={`${styles.pujcit_btn} ${styles.vratit_btn}`}>
         Vrátit
       </button>
     );
   } else if (isPhoneBorrowed && !canThisUserReturn) {
     btn = (
-      <button disabled style={{ backgroundColor: "gray", cursor: "not-allowed" }} onClick={returnPhone} className={styles.pujcit_btn}>
+      <button disabled onClick={returnPhone} className={`${styles.pujcit_btn} ${styles.disabled_btn}`}>
         Vrátit
       </button>
     );
   } else {
     btn = (
-      <button style={{ backgroundColor: "green" }} onClick={borrowPhone} className={styles.pujcit_btn}>
+      <button onClick={borrowPhone} className={styles.pujcit_btn}>
         Půjčit
       </button>
     );

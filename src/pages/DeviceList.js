@@ -61,6 +61,10 @@ const DeviceList = () => {
 
     const data = await response.json();
 
+    if (isResetBtnVisible) {
+      setIsResetBtnVisble(false);
+    }
+
     setPhones(data);
     setFilteredPhones(data);
     console.log(data);

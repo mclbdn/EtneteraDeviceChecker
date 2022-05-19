@@ -9,7 +9,6 @@
   margin-bottom: 20px;
 
   .borrowed_details {
-  
     background-color: $gray-color;
 
     p {
@@ -88,6 +87,16 @@
     color: $black-color;
     border-radius: 4px;
     background-color: $orange-color;
+  }
+
+  .vratit_btn {
+    background-color: $green-color;
+    cursor: pointer;
+  }
+
+  .nevratit_btn {
+    background-color: $gray-color;
+    cursor: not-allowed;
   }
 
   .disabled_btn {
