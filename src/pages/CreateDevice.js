@@ -11,7 +11,7 @@ const CreateDevice = () => {
   const [vendor, setVendor] = useState("");
   const [model, setModel] = useState("");
   const [image, setImage] = useState("");
-  const [formHasErrors, setFormHasErrors] = useState(false);
+  const [formHasErrors, setFormHasErrors] = useState();
 
   const createDevice = async (e) => {
     e.preventDefault();
@@ -70,7 +70,6 @@ const CreateDevice = () => {
       <main>
         <h1 style={{ color: "white" }}>Create Device</h1>
         <form className={styles.form} onSubmit={createDevice}>
-          {/* <div className={styles.login_and_password}> */}
           <div className={styles.label_and_input_container}>
             <label htmlFor="code">Kódové označení (identifikátor)</label>
             <input
@@ -110,7 +109,7 @@ const CreateDevice = () => {
             <label htmlFor="osVersion">Obrázek (URL)</label>
             <input type="url" name="image" id="image" placeholder="Obrázek (URL)" value={image} onChange={(e) => setImage(e.target.value)} />
           </div>
-          {/* </div> */}
+
           <button>Přidat Zařízení</button>
         </form>
       </main>

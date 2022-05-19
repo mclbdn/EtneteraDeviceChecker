@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import MainPage from "./pages/MainPage";
 import Login from "./pages/Login";
 import DeviceList from "./pages/DeviceList";
 import CreateDevice from "./pages/CreateDevice";
@@ -11,6 +12,7 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
+          <Route path="/" element={<MainPage />} />
           <Route path="login" element={<Login />} />
           <Route path="devicelist" element={<DeviceList />} />
           <Route path="createdevice" element={<CreateDevice />} />

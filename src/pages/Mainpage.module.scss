@@ -1,0 +1,65 @@
+@import "../styles/variables";
+
+.link_and_login_logo {
+  margin-top: 20px;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+
+  a {
+    border: 1px solid $off-white-color;
+    border-radius: 4px;
+    padding: 5px;
+    display: block;
+    text-decoration: none;
+    color: $off-white-color;
+    font-size: 15px;
+    font-weight: 600;
+    text-align: center;
+
+    @media screen and(min-width: 744px) {
+      padding: 10px;
+      font-size: 18px;
+    }
+
+    @media screen and(min-width: 1440px) {
+      font-size: 20px;
+    }
+  }
+
+  span {
+    margin-left: 5px;
+    line-height: 15px;
+
+    @media screen and(min-width: 744px) {
+      line-height: 18px;
+    }
+
+    @media screen and(min-width: 1440px) {
+      line-height: 20px;
+    }
+
+    .login_logo {
+      color: $orange-color;
+      height: 15px;
+      width: auto;
+
+      @media screen and(min-width: 744px) {
+        height: 18px;
+      }
+
+      @media screen and(min-width: 1440px) {
+        height: 20px;
+      }
+    }
+  }
+
+  @media screen and(min-width: 744px) {
+    margin-top: 60px;
+  }
+
+  @media screen and (min-width: 1440px) {
+    margin-top: 90px;
+  }
+}

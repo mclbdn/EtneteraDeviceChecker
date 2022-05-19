@@ -39,6 +39,7 @@ main {
       cursor: pointer;
       color: $off-white-color;
     }
+
     .select,
     .search_input {
       height: 30px;
@@ -48,6 +49,17 @@ main {
       color: $white-color;
       border-radius: 4px;
       margin-right: 20px;
+    }
+
+    label {
+      border-width: 0 !important;
+      clip: rect(1px, 1px, 1px, 1px) !important;
+      height: 1px !important;
+      overflow: hidden !important;
+      padding: 0 !important;
+      position: absolute !important;
+      white-space: nowrap !important;
+      width: 1px !important;
     }
   }
 

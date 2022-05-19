@@ -7,7 +7,7 @@ const Login = () => {
   const navigate = useNavigate();
   const [prihlasovaciJmeno, setPrihlasovaciJmeno] = useState("");
   const [heslo, setHeslo] = useState("");
-  const [formHasErrors, setFormHasErrors] = useState(false);
+  const [formHasErrors, setFormHasErrors] = useState();
 
   const login = async (e) => {
     e.preventDefault();
@@ -67,6 +67,7 @@ const Login = () => {
               <input type="password" name="heslo" id="heslo" placeholder="Heslo" value={heslo} onChange={(e) => setHeslo(e.target.value)} required />
             </div>
           </div>
+          {formHasErrors && <p className={styles.form_error}>{formHasErrors.message}</p>}
           <button>Přihlásit se</button>
         </form>
       </main>

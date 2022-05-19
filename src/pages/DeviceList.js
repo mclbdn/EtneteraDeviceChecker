@@ -162,6 +162,7 @@ const DeviceList = () => {
                 );
               })}
             </select>
+            <label htmlFor="search">Hledat</label>
             <input
               type="text"
               name="search"
