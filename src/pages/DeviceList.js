@@ -37,6 +37,11 @@ const DeviceList = () => {
   };
 
   const getPhones = async () => {
+    try {
+    } catch (err) {
+      console.log(err);
+      navigate("/");
+    }
     const response = await fetch("https://js-test-api.etnetera.cz/api/v1/phones", {
       method: "GET",
       headers: {
@@ -47,12 +52,14 @@ const DeviceList = () => {
 
     const data = await response.json();
 
-    if (isResetBtnVisible) {
-      dispatch(setIsResetBtnVisble(false));
-    }
+    if (response.status === 200) {
+      if (isResetBtnVisible) {
+        dispatch(setIsResetBtnVisble(false));
+      }
 
-    dispatch(setPhones(data));
-    dispatch(setFilteredPhones(data));
+      dispatch(setPhones(data));
+      dispatch(setFilteredPhones(data));
+    }
   };
 
   useEffect(() => {
@@ -70,7 +77,7 @@ const DeviceList = () => {
     // Make sure osList and vendorList only has unique values. That's why there are two sets up top.
     dispatch(setOsList([...osSet]));
     dispatch(setVendorList([...vendorSet]));
-  }, [phones, dispatch]);
+  }, []);
 
   // On the initial render of this page, check if the user is logged in or not - if not, send him back to login. Also, populate phones array
   useEffect(() => {
@@ -85,20 +92,21 @@ const DeviceList = () => {
         <SelectAndBtns />
         <h1 style={{ color: "white" }}>Device List</h1>
         <div className={styles.phones_container}>
-          {filteredPhones.map((phone) => {
-            return (
-              <SinglePhoneContainer
-                key={phone.id}
-                id={phone.id}
-                model={phone.model}
-                vendor={phone.vendor}
-                os={phone.os}
-                osVersion={phone.osVersion}
-                image={phone.image}
-                borrowed={phone.borrowed}
-              />
-            );
-          })}
+          {filteredPhones &&
+            filteredPhones.map((phone) => {
+              return (
+                <SinglePhoneContainer
+                  key={phone.id}
+                  id={phone.id}
+                  model={phone.model}
+                  vendor={phone.vendor}
+                  os={phone.os}
+                  osVersion={phone.osVersion}
+                  image={phone.image}
+                  borrowed={phone.borrowed}
+                />
+              );
+            })}
         </div>
       </main>
     </>
