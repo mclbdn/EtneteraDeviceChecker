@@ -26,17 +26,14 @@ const Login = () => {
     const data = await response.json();
 
     if (response.status === 200) {
-      console.log("OK");
       localStorage.setItem("token", data.token);
       localStorage.setItem("userId", data.id);
       navigate("/devicelist");
     } else if (response.status === 401) {
-      console.log(401);
       setFormHasErrors({
         message: "Nesprávné přihlašovací jméno či heslo!",
       });
     } else if (response.status === 400) {
-      console.log(400);
       setFormHasErrors({
         message: "Je potřeba vyplnit přihlašovací jméno a heslo!",
       });
