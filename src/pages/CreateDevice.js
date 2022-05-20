@@ -60,6 +60,8 @@ const CreateDevice = () => {
       navigate("/devicelist");
     }
   };
+
+  // On the initial render of this page, check if the user is admin or not - if not, send him back to device list
   useEffect(() => {
     verifyUserOrAdmin();
   }, []);

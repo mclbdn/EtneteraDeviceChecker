@@ -26,7 +26,6 @@ const DeviceList = () => {
     });
 
     const data = await response.json();
-    console.log(data);
 
     if (data.type === "admin") {
       dispatch(setIsAdmin(true));
@@ -60,16 +59,20 @@ const DeviceList = () => {
     const osSet = new Set();
     const vendorSet = new Set();
 
+    // Populate the sets above with OS and vendor values
     if (phones) {
       phones.forEach((phone) => {
         osSet.add(phone.os);
         vendorSet.add(phone.vendor);
       });
     }
+
+    // Make sure osList and vendorList only has unique values. That's why there are two sets up top.
     dispatch(setOsList([...osSet]));
     dispatch(setVendorList([...vendorSet]));
   }, [phones, dispatch]);
 
+  // On the initial render of this page, check if the user is logged in or not - if not, send him back to login. Also, populate phones array
   useEffect(() => {
     verifyUserOrAdmin();
     getPhones();

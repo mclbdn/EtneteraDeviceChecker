@@ -20,21 +20,6 @@ const SelectAndBtns = () => {
 
   useEffect(() => {
     const filteredPhones = phones.filter((phone) => {
-      if (!("borrowed" in phone) && available) {
-        return true;
-      }
-      return false;
-    });
-
-    if (available) {
-      dispatch(setFilteredPhones(filteredPhones));
-    } else {
-      dispatch(setFilteredPhones(phones));
-    }
-  }, [available]);
-
-  useEffect(() => {
-    const filteredPhones = phones.filter((phone) => {
       if (!search) {
         return true;
       }
@@ -83,7 +68,6 @@ const SelectAndBtns = () => {
 
     dispatch(setPhones(data));
     dispatch(setFilteredPhones(data));
-    console.log(data);
   };
 
   const redirectToCreateDevice = () => {
@@ -116,6 +100,22 @@ const SelectAndBtns = () => {
   const handleAvailable = (e) => {
     dispatch(setIsAvailableCheckboxChecked(e.target.checked));
   };
+
+  // If the state of 
+  useEffect(() => {
+    const filteredPhones = phones.filter((phone) => {
+      if (!("borrowed" in phone) && available) {
+        return true;
+      }
+      return false;
+    });
+
+    if (available) {
+      dispatch(setFilteredPhones(filteredPhones));
+    } else {
+      dispatch(setFilteredPhones(phones));
+    }
+  }, [available]);
 
   return (
     <div className={styles.select_and_btns_container}>
